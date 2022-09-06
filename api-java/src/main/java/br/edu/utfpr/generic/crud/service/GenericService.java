@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 public abstract class GenericService<T> {
 
-    @Autowired
     private GenericRepository<T> genericRepository;
+
+    public GenericService(GenericRepository<T> genericRepository) {
+        this.genericRepository = genericRepository;
+    }
 
     public ResponseEntity save(T requestBody) {
         ResponseEntity responseEntity;
