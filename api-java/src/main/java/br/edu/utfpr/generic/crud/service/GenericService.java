@@ -3,11 +3,10 @@ package br.edu.utfpr.generic.crud.service;
 import br.edu.utfpr.generic.crud.repository.GenericRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 public abstract class GenericService<T> {
 
-    private GenericRepository<T> genericRepository;
+    private final GenericRepository<T> genericRepository;
 
     public GenericService(GenericRepository<T> genericRepository) {
         this.genericRepository = genericRepository;
