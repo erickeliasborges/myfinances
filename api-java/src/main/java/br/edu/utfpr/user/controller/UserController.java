@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("v1/user")
-public class UserController extends GenericController<UserModel> {
+public class UserController extends GenericController<UserModel, Long> {
 
     @Autowired
     public UserController(UserService userService) {

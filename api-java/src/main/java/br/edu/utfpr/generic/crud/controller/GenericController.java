@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-public abstract class GenericController<T> {
+import java.io.Serializable;
+
+public abstract class GenericController<T, ID extends Serializable> {
 
     private final GenericService<T> genericService;
 
