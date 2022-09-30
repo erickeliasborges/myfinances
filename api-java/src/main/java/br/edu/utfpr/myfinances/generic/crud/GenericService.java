@@ -2,11 +2,11 @@ package br.edu.utfpr.myfinances.generic.crud;
 
 import java.util.List;
 
-public abstract class GenericService<T> {
+public abstract class GenericService<T, ID> {
 
-    private final GenericRepository<T> genericRepository;
+    private final GenericRepository<T, ID> genericRepository;
 
-    public GenericService(GenericRepository<T> genericRepository) {
+    public GenericService(GenericRepository<T, ID> genericRepository) {
         this.genericRepository = genericRepository;
     }
 
@@ -14,7 +14,7 @@ public abstract class GenericService<T> {
         return genericRepository.save(requestBody);
     }
 
-    public String deleteById(Long id) {
+    public String deleteById(ID id) {
         genericRepository.deleteById(id);
         return "Registro deletado com sucesso.";
     }

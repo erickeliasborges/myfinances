@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService extends GenericService<User> {
+public class UserService extends GenericService<User, Long> {
 
     BCryptPasswordEncoder passwordEncoder;
 
@@ -18,7 +18,7 @@ public class UserService extends GenericService<User> {
 
     @Override
     public User save(User requestBody) throws Exception {
-        requestBody.setPassword( passwordEncoder.encode(requestBody.getPassword()));
+        requestBody.setPassword(passwordEncoder.encode(requestBody.getPassword()));
         return super.save(requestBody);
     }
 }
