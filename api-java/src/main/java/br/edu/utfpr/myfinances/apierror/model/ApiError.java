@@ -1,14 +1,15 @@
 package br.edu.utfpr.myfinances.apierror.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class ApiError {

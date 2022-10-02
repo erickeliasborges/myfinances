@@ -2,15 +2,17 @@ package br.edu.utfpr.myfinances.registrations.movement.entitys;
 
 import br.edu.utfpr.myfinances.registrations.account.entitys.Account;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "movement")

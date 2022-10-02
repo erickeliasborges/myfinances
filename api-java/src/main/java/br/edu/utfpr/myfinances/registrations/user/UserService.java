@@ -1,12 +1,12 @@
 package br.edu.utfpr.myfinances.registrations.user;
 
-import br.edu.utfpr.myfinances.generic.crud.GenericService;
+import br.edu.utfpr.myfinances.generic.crud.GenericCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService extends GenericService<User, Long> {
+public class UserService extends GenericCrudService<User, Long> {
 
     BCryptPasswordEncoder passwordEncoder;
 

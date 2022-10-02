@@ -1,12 +1,14 @@
 package br.edu.utfpr.myfinances.registrations.account.entitys;
 
 import br.edu.utfpr.myfinances.registrations.user.User;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @Entity(name = "account")
 public class Account implements Serializable {
 
