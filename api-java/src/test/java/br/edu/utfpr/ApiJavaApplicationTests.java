@@ -10,4 +10,6 @@ class ApiJavaApplicationTests {
 	void contextLoads() {
 	}
 
+	//TODO: criar os testes para o usuario e movimentacoes
+
 }
