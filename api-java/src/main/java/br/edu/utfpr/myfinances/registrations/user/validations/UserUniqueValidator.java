@@ -14,8 +14,8 @@ public record UserUniqueValidator(UserRepository userRepository,
 
     @Override
     public boolean isValid(String username, ConstraintValidatorContext constraintValidatorContext) {
-        return ((updatingUser()) ||
-                (!Optional.ofNullable(userRepository.findByUsername(username)).isPresent()));
+        Boolean userExists = (Optional.ofNullable(userRepository.findByUsername(username)).isPresent());
+        return ((updatingUser()) || (!userExists));
     }
 
     private Boolean updatingUser() {
