@@ -1,5 +1,6 @@
 package br.edu.utfpr.myfinances.registrations.user;
 
+import br.edu.utfpr.myfinances.registrations.user.validations.UserUniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,6 +35,7 @@ public class User implements UserDetails {
     @NotNull(message = "Parameter username is required.")
     @Size(min = 4, max = 255)
     @Column
+    @UserUniqueConstraint
     private String username;
 
     @NotNull(message = "Parameter birthdate is required.")

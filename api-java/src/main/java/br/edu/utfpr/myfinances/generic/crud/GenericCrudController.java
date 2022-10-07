@@ -21,20 +21,18 @@ public abstract class GenericCrudController<T, DTO, ID extends Serializable> {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid DTO requestBody) throws Exception {
-        return saveOrUpdate(requestBody);
+        return ResponseEntity.ok(modelMapperUtils.convertToDto(
+                genericCrudService.save(
+                        modelMapperUtils.convertToEntity(requestBody))
+        ));
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody @Valid DTO requestBody) throws Exception {
-        return saveOrUpdate(requestBody);
-    }
-
-    private ResponseEntity<?> saveOrUpdate(@RequestBody DTO requestBody) throws Exception {
         return ResponseEntity.ok(modelMapperUtils.convertToDto(
-                genericCrudService.save(
+                genericCrudService.update(
                         modelMapperUtils.convertToEntity(requestBody))
-                )
-        );
+        ));
     }
 
     @DeleteMapping("{id}")

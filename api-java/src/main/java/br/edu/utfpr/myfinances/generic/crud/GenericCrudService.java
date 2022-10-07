@@ -1,6 +1,8 @@
 package br.edu.utfpr.myfinances.generic.crud;
 
 import br.edu.utfpr.myfinances.apierror.exception.DataNotFoundException;
+import br.edu.utfpr.myfinances.apierror.exception.LinkedRegisterException;
+import br.edu.utfpr.myfinances.generic.response.GenericResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,13 +15,31 @@ public abstract class GenericCrudService<T, ID> {
         this.genericCrudRepository = genericCrudRepository;
     }
 
+    public T update(T requestBody) throws Exception {
+        return genericCrudRepository.save(requestBody);
+    }
+
     public T save(T requestBody) throws Exception {
         return genericCrudRepository.save(requestBody);
     }
 
-    public String deleteById(ID id) {
+    public GenericResponse deleteById(ID id) {
+        if (!genericCrudRepository.existsById(id))
+            throw new DataNotFoundException("Registro não encontrado.");
+
+        if (linkedRegister(id))
+            throw new LinkedRegisterException(getMessageLinkedRegisterException());
+
         genericCrudRepository.deleteById(id);
-        return "Registro deletado com sucesso.";
+        return new GenericResponse("Registro deletado com sucesso.");
+    }
+
+    public Boolean linkedRegister(ID id) {
+        return false;
+    }
+
+    public String getMessageLinkedRegisterException() {
+        return "";
     }
 
     public List<T> getAll() {

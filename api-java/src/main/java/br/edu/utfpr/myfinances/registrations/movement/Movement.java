@@ -10,6 +10,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -34,12 +36,14 @@ public class Movement implements Serializable {
 
     @Column
     @NotNull
+    @DecimalMin(message = "O valor deve ser maior que zero.", value = "0.1")
     private BigDecimal value;
 
     @Column(name = "due_date", columnDefinition = "timestamp")
     private LocalDateTime dueDate;
 
     @Column(name = "amount_paid")
+    @DecimalMin(message = "O valor pago deve ser maior que zero.", value = "0.1")
     private BigDecimal amountPaid;
 
     @Column(name = "pay_date", columnDefinition = "timestamp")
@@ -52,6 +56,7 @@ public class Movement implements Serializable {
 
     @Column
     @NotNull
+    @NotBlank
     private String description;
 
     @Column(name = "type_movement")

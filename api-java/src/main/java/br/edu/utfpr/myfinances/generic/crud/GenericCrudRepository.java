@@ -5,5 +5,4 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface GenericCrudRepository<T, ID> extends JpaRepository<T, ID> {
-
 }
