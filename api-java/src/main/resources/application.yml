@@ -12,6 +12,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: none
   h2:
     console:
       enabled: true
