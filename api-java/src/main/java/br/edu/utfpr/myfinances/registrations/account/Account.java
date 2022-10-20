@@ -35,7 +35,7 @@ public class Account implements Serializable {
     @NotNull
     private Long number;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "bank_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bank"))
     @NotNull
     private Bank bank;

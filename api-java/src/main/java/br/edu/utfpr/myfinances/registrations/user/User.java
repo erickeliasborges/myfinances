@@ -28,6 +28,12 @@ public class User implements UserDetails {
     @SequenceGenerator(name = "users_seq", sequenceName = "users_seq")
     private Long id;
 
+    //TODO: internacionalizar as mensagens de validação, criar um arquivo
+    // ValidationMessages.properties na pasta resources, esse é o arquivo padrão (em inglês) que
+    // irá cair caso não seja específicado o Accept-Language no header da request, para criar um
+    // pt_br criar um arquivo na mesma pasta chamado ValidationMessages_pt_BR.properties,
+    // e na request passar o Accept-Language como pt_BR
+
     @NotNull(message = "Parameter name is required.")
     @Size(min = 4, max = 255)
     private String name;

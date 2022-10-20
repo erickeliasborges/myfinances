@@ -29,7 +29,7 @@ public class Movement implements Serializable {
     @SequenceGenerator(name = "movement_seq", sequenceName = "movement_seq")
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_account"))
     @NotNull
     private Account account;
@@ -49,7 +49,7 @@ public class Movement implements Serializable {
     @Column(name = "pay_date", columnDefinition = "timestamp")
     private LocalDateTime payDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_category"))
     @NotNull
     private Category category;
