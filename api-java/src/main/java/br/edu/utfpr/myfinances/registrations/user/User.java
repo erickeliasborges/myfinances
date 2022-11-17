@@ -44,12 +44,12 @@ public class User implements UserDetails {
     @UserUniqueConstraint
     private String username;
 
-    @NotNull(message = "Parameter birthdate is required.")
+//    @NotNull(message = "Parameter birthdate is required.")
     private LocalDate birthdate;
 
     @NotNull(message = "Parameter password is required.")
     @Size(min = 6, max = 254)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
     private String password;
 
     @NotNull(message = "Parameter email is required.")
