@@ -1,17 +1,35 @@
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  Link,
+  Stack,
+} from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
-import { Link } from 'react-router-dom';
+import { useForm } from "react-hook-form";
 import { IUserLogin } from "../../commons/interfaces";
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import AuthService from "../../service/AuthService";
 
 export function LoginPage() {
-  const [form, setForm] = useState({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<IUserLogin>();
+
+  const [form, setForm] = useState<IUserLogin>({
     username: "",
     password: "",
   });
-  const [pendingApiCall, setPendingApiCall] = useState(false);
-  const [apiError, setApiError] = useState(false);
 
+  const [pendingApiCall, setPendingApiCall] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
@@ -23,9 +41,8 @@ export function LoginPage() {
     });
   };
 
-  const onClickLogin = () => {
+  const onSubmit = () => {
     setPendingApiCall(true);
-
     const userLogin: IUserLogin = {
       username: form.username,
       password: form.password,
@@ -38,54 +55,97 @@ export function LoginPage() {
         console.log(response);
       })
       .catch((errorResponse) => {
-        setApiError(true);
+        setApiError((errorResponse.response && errorResponse.response.status === 401 ? "Usuário ou senha inválidos" : "Falha ao efetuar login"));
         setPendingApiCall(false);
         console.log(errorResponse);
       });
   };
   return (
-    <div className="container">
-      <h1 className="text-center">Login</h1>
+    <Flex
+      flexDirection="column"
+      width="100wh"
+      height="100vh"
+      backgroundColor="gray.200"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Stack
+        flexDir="column"
+        mb="2"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Heading color="teal.400">Login</Heading>
+        <Box minWidth={{ base: "90%", md: "468px" }}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack
+              spacing={4}
+              p="1rem"
+              backgroundColor="whiteAlpha.900"
+              boxShadow="md"
+            >
+              <FormControl
+                variant="floating"
+                id="username"
+                isInvalid={errors.username && true}
+              >
+                <Input
+                  placeholder=" "
+                  type="text"
+                  value={form.username}
+                  {...register("username", {
+                    required: "O campo usuário é obrigatório",
+                    onChange: onChange,
+                  })}
+                />
+                <FormLabel>Usuário</FormLabel>
+                <FormErrorMessage>
+                  {errors.username && errors.username.message}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl
+                variant="floating"
+                id="password"
+                isInvalid={errors.password && true}
+              >
+                <Input
+                  type="password"
+                  placeholder=" "
+                  value={form.password}
+                  {...register("password", {
+                    required: "O campo senha é obrigatório",
+                    onChange: onChange,
+                  })}
+                />
+                <FormErrorMessage>
+                  {errors.password && errors.password.message}
+                </FormErrorMessage>
+                <FormLabel>Senha</FormLabel>
+              </FormControl>
 
-      <div className="col-12 mb-3">
-        <label>Informe seu usuário</label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Informe o seu usuário"
-          onChange={onChange}
-          value={form.username}
-          name="username"
-        />
-      </div>
+              {apiError && (
+                <div className="alert alert-danger text-center">{apiError}</div>
+              )}
 
-      <div className="col-12 mb-3">
-        <label>Informe sua senha</label>
-        <input
-          type="password"
-          className="form-control"
-          placeholder="Informe a sua senha"
-          onChange={onChange}
-          value={form.password}
-          name="password"
-        />
-      </div>
-
-      {apiError && 
-        <div className="alert alert-danger">Falha ao efetuar login</div>}
-
-      <div className="text-center">
-        <ButtonWithProgress
-          disabled={pendingApiCall}
-          className="btn btn-primary"
-          onClick={onClickLogin}
-          pendingApiCall={pendingApiCall}
-          text="Entrar"
-        />
-      </div>
-      <div className="text-center">
-        <Link className="btn btn-outline-secondary" to="/signup">Cadastrar novo usuário</Link>
-      </div>
-    </div>
+              <Button
+                borderRadius={0}
+                type="submit"
+                variant="solid"
+                colorScheme="teal"
+                width="full"
+              >
+                Login
+              </Button>
+            </Stack>
+          </form>
+        </Box>
+      </Stack>
+      <Box>
+        Não tem cadastro?{" "}
+        <Link color="teal.500" href="/signup">
+          Cadastre-se
+        </Link>
+      </Box>
+    </Flex>
   );
 }
