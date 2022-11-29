@@ -160,10 +160,10 @@ export function UserSignupPage() {
                     onChange: onChange,
                   })}
                 />
+                <FormLabel>Senha</FormLabel>
                 <FormErrorMessage>
                   {errors.password && errors.password.message}
-                </FormErrorMessage>
-                <FormLabel>Senha</FormLabel>
+                </FormErrorMessage>                
               </FormControl>
 
               <FormControl
@@ -180,10 +180,10 @@ export function UserSignupPage() {
                     onChange: onChange,
                   })}
                 />
+                <FormLabel>E-mail</FormLabel>
                 <FormErrorMessage>
                   {errors.email && errors.email.message}
-                </FormErrorMessage>
-                <FormLabel>E-mail</FormLabel>
+                </FormErrorMessage>                
               </FormControl>
 
               {/* {apiError && (

@@ -1,11 +1,12 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "./App.css";
 import { BaseRoutes } from "./routes/BaseRoutes";
-import { SignRoutes } from "./routes/SignRoutes";
 
 const activeLabelStyles = {
   transform: "scale(0.85) translateY(-24px)"
 };
+
+//Adiciona configurações de layout para o chakra, pegado da documentação para deixar os labels dos inputs flutuantes
 export const theme = extendTheme({
   components: {
     Form: {

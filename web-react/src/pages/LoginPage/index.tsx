@@ -117,10 +117,10 @@ export function LoginPage() {
                     onChange: onChange,
                   })}
                 />
+                <FormLabel>Senha</FormLabel>
                 <FormErrorMessage>
                   {errors.password && errors.password.message}
-                </FormErrorMessage>
-                <FormLabel>Senha</FormLabel>
+                </FormErrorMessage>                
               </FormControl>
 
               {apiError && (
