@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -21,6 +20,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Entity(name = "users")
 @Table(uniqueConstraints = @UniqueConstraint(name = "unique_username", columnNames = "username"))
+@UserUniqueConstraint
 public class User implements UserDetails {
 
     @Id
@@ -41,7 +41,6 @@ public class User implements UserDetails {
     @NotNull(message = "Parameter username is required.")
     @Size(min = 4, max = 255)
     @Column
-    @UserUniqueConstraint
     private String username;
 
 //    @NotNull(message = "Parameter birthdate is required.")

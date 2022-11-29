@@ -11,4 +11,8 @@ public interface UserRepository extends GenericCrudRepository<User, Long> {
 
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
+    User findByUsernameOrEmail(String username, String email);
+
 }
