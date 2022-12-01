@@ -43,9 +43,6 @@ public class User implements UserDetails {
     @Column
     private String username;
 
-//    @NotNull(message = "Parameter birthdate is required.")
-    private LocalDate birthdate;
-
     @NotNull(message = "Parameter password is required.")
     @Size(min = 6, max = 254)
 //    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
@@ -53,8 +50,6 @@ public class User implements UserDetails {
 
     @NotNull(message = "Parameter email is required.")
     private String email;
-
-    private String phoneNumber;
 
     @Override
     @Transient

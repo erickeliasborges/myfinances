@@ -1,3 +1,4 @@
+import { Text } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ICategory } from '../../commons/interfaces';
@@ -57,7 +58,8 @@ export function CategoryFormPage() {
 
     return (
         <div className="container">
-            <h1 className="text-center">Cadastro de Categoria</h1>
+
+            <Text className="text-center" fontSize='30px'>Categoria / Manutenção</Text>
 
             <div className="col-12 mb-3">
                 <Input

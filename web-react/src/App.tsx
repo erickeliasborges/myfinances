@@ -3,11 +3,19 @@ import "./App.css";
 import { BaseRoutes } from "./routes/BaseRoutes";
 
 const activeLabelStyles = {
-  transform: "scale(0.85) translateY(-24px)"
+  transform: "scale(0.85) translateY(-24px)",
 };
 
 //Adiciona configurações de layout para o chakra, pegado da documentação para deixar os labels dos inputs flutuantes
 export const theme = extendTheme({
+  styles: {
+    global: {
+      // styles for the `body`
+      html: {
+        height: '100%'        
+      },
+    },
+  },
   components: {
     Form: {
       variants: {
@@ -15,12 +23,13 @@ export const theme = extendTheme({
           container: {
             _focusWithin: {
               label: {
-                ...activeLabelStyles
-              }
+                ...activeLabelStyles,
+              },
             },
-            "input:not(:placeholder-shown) + label, .chakra-select__wrapper + label, textarea:not(:placeholder-shown) ~ label": {
-              ...activeLabelStyles
-            },
+            "input:not(:placeholder-shown) + label, .chakra-select__wrapper + label, textarea:not(:placeholder-shown) ~ label":
+              {
+                ...activeLabelStyles,
+              },
             label: {
               top: 0,
               left: 0,
@@ -31,13 +40,13 @@ export const theme = extendTheme({
               mx: 3,
               px: 1,
               my: 2,
-              transformOrigin: "left top"
-            }
-          }
-        }
-      }
-    }
-  }
+              transformOrigin: "left top",
+            },
+          },
+        },
+      },
+    },
+  },
 });
 
 export function App() {

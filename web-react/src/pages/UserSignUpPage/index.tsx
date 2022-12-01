@@ -53,11 +53,11 @@ export function UserSignupPage() {
     });
 
     setErrors((previousErrors: any) => {
-          return {
-            ...previousErrors,
-            [name]: "",
-          };
-        });
+      return {
+        ...previousErrors,
+        [name]: "",
+      };
+    });
   };
 
   const onClickSignUp = () => {
@@ -148,26 +148,6 @@ export function UserSignupPage() {
 
               <FormControl
                 variant="floating"
-                id="password"
-                isInvalid={errors.password && true}
-              >
-                <Input
-                  type="password"
-                  placeholder=" "
-                  value={form.password}
-                  {...register("password", {
-                    required: "O campo senha é obrigatório",
-                    onChange: onChange,
-                  })}
-                />
-                <FormLabel>Senha</FormLabel>
-                <FormErrorMessage>
-                  {errors.password && errors.password.message}
-                </FormErrorMessage>                
-              </FormControl>
-
-              <FormControl
-                variant="floating"
                 id="email"
                 isInvalid={errors.email && true}
               >
@@ -183,7 +163,27 @@ export function UserSignupPage() {
                 <FormLabel>E-mail</FormLabel>
                 <FormErrorMessage>
                   {errors.email && errors.email.message}
-                </FormErrorMessage>                
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                variant="floating"
+                id="password"
+                isInvalid={errors.password && true}
+              >
+                <Input
+                  type="password"
+                  placeholder=" "
+                  value={form.password}
+                  {...register("password", {
+                    required: "O campo senha é obrigatório",
+                    onChange: onChange,
+                  })}
+                />
+                <FormLabel>Senha</FormLabel>
+                <FormErrorMessage>
+                  {errors.password && errors.password.message}
+                </FormErrorMessage>
               </FormControl>
 
               {/* {apiError && (
