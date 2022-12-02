@@ -13,6 +13,7 @@ export function AuthenticatedRoutes() {
 
                 <Route path="/categories" element={<CategoryListPage />} />
                 <Route path="/categories/new" element={<CategoryFormPage />} />
+                <Route path="/categories/:id" element={<CategoryFormPage />} />
 
                 <Route path="*" element={<HomePage />} />
             </Routes>

@@ -6,7 +6,6 @@ import {
   Button,
   Stack,
   Collapse,
-  Icon,
   Link,
   Popover,
   PopoverTrigger,
@@ -23,7 +22,8 @@ import {
 } from "@chakra-ui/icons";
 
 import AuthService from "../../service/AuthService";
-import logo from "../../assets/utfpr-logo.png";
+
+import * as Icon from 'react-bootstrap-icons';
 
 export function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
@@ -65,8 +65,8 @@ export function NavBar() {
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
-          >
-            <Link href="/"><img src={logo} width="60" alt="UTFPR" /></Link> 
+          >            
+            <Link href="/"> <Icon.CashCoin color="teal" size='30px' /> </Link> 
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -264,15 +264,19 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
+    label: "Movimentações",
+    href: "/movements",
+  },
+  {
+    label: "Conta",
+    href: "/accounts",
+  },
+  {
     label: "Categorias",
     href: "/categories",
   },
   {
-    label: "Produtos",
-    href: "/products",
-  },  
-  {
-    label: "Produtos V2",
-    href: "/product-v2",
-  },  
+    label: "Bancos",
+    href: "/banks",
+  },    
 ];

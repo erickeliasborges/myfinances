@@ -55,7 +55,7 @@ export function CategoryListPage() {
 
       <Container position="absolute" height="90%" maxW="100%">
       <Text className="text-center p-2" fontSize="30px">
-        Categoria / Pesquisa
+        Categorias / Pesquisa
       </Text>
         <TableContainer overflowY='auto' maxH='75%'
         //Estiliza a barra de rolagem

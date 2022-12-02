@@ -1,5 +1,6 @@
 package br.edu.utfpr.myfinances.registrations.category;
 
+import br.edu.utfpr.myfinances.registrations.category.validations.CategoryUniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity(name = "category")
 @Table(uniqueConstraints = @UniqueConstraint(name = "unique_name_category", columnNames = "name"))
+@CategoryUniqueConstraint
 public class Category implements Serializable {
 
     @Id

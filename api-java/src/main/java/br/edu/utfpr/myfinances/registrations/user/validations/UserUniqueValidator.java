@@ -5,6 +5,7 @@ import br.edu.utfpr.myfinances.registrations.user.UserRepository;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
 import java.util.Optional;
 
 public record UserUniqueValidator(UserRepository userRepository) implements ConstraintValidator<UserUniqueConstraint, User> {
@@ -36,7 +37,7 @@ public record UserUniqueValidator(UserRepository userRepository) implements Cons
     }
 
     private Boolean userValid(User user, Optional<User> userOptional, ConstraintValidatorContext constraintValidatorContext, String messageConstraint, String fieldName) {
-        if ((userOptional.isPresent()) && (userOptional.get().getId() != user.getId())) {
+        if ((userOptional.isPresent()) && (!Objects.equals(userOptional.get().getId(), user.getId()))) {
             constraintValidatorContext.buildConstraintViolationWithTemplate(messageConstraint)
                     .addPropertyNode(fieldName)
                     .addConstraintViolation();

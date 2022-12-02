@@ -19,6 +19,10 @@ public abstract class GenericCrudController<T, DTO, ID extends Serializable> {
         this.modelMapperUtils = new ModelMapperUtils<>(entityClass, dtoClass);
     }
 
+    public GenericCrudService<T, ID> getService() {
+        return genericCrudService;
+    }
+
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid DTO requestBody) throws Exception {
         return ResponseEntity.ok(modelMapperUtils.convertToDto(

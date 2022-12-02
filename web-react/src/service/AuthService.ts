@@ -5,6 +5,10 @@ const signup = (user: IUserSignUp) => {
     return api.post('/v1/users', user);
 }
 
+const loggedUser = () => {
+    return api.get('/v1/users/bytoken');
+}
+
 const login = (user: IUserLogin) => {
     return api.post('/login', user);
 }
@@ -26,5 +30,6 @@ const AuthService = {
     login,
     isAuthenticated,
     logout,
+    loggedUser,
 }
 export default AuthService;

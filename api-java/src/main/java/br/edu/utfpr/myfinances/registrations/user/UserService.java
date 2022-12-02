@@ -13,6 +13,7 @@ import java.util.Optional;
 @Service
 public class UserService extends GenericCrudService<User, Long> {
 
+    private UserRepository userRepository;
     private AccountRepository accountRepository;
 
     BCryptPasswordEncoder passwordEncoder;
@@ -21,6 +22,7 @@ public class UserService extends GenericCrudService<User, Long> {
     public UserService(UserRepository userRepository, AccountRepository accountRepository) {
         super(userRepository);
         passwordEncoder = new BCryptPasswordEncoder();
+        this.userRepository = userRepository;
         this.accountRepository = accountRepository;
     }
 
@@ -45,6 +47,10 @@ public class UserService extends GenericCrudService<User, Long> {
     @Override
     public String getMessageLinkedRegisterException() {
         return "Não é possível deletar pois o usuário está em uso.";
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
 }
