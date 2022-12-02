@@ -1,9 +1,13 @@
 package br.edu.utfpr.myfinances.registrations.bank;
 
 import br.edu.utfpr.myfinances.generic.crud.GenericCrudService;
+import br.edu.utfpr.myfinances.registrations.account.Account;
 import br.edu.utfpr.myfinances.registrations.account.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BankService extends GenericCrudService<Bank, Long> {
@@ -18,7 +22,8 @@ public class BankService extends GenericCrudService<Bank, Long> {
 
     @Override
     public Boolean linkedRegister(Long id) {
-        return (accountRepository.findByBank_Id(id).isPresent());
+        Optional<List<Account>> optionalAccounts = accountRepository.findByBank_Id(id);
+        return (optionalAccounts.isPresent()) && (!optionalAccounts.get().isEmpty());
     }
 
     @Override
