@@ -15,3 +15,8 @@ export interface ICategory {
     id?: number;
     name: string;
 }
+
+export interface IBank {
+    id?: number;
+    name: string;
+}

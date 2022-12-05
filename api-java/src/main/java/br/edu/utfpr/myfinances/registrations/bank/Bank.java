@@ -1,5 +1,6 @@
 package br.edu.utfpr.myfinances.registrations.bank;
 
+import br.edu.utfpr.myfinances.registrations.bank.validations.BankUniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity(name = "bank")
 @Table(uniqueConstraints = @UniqueConstraint(name = "unique_name_bank", columnNames = "name"))
+@BankUniqueConstraint
 public class Bank implements Serializable {
 
     @Id
