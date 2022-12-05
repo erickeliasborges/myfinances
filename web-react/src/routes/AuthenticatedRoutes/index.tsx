@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { NavBar } from '../../components/NavBar'
-import { CategoryFormPage } from '../../pages/CategoryFormPage'
-import { CategoryListPage } from '../../pages/CategoryListPage'
+import { CategoryMaintenancePage } from '../../pages/Category/CategoryMaintenancePage'
+import { CategorySearchPage } from '../../pages/Category/CategorySearchPage'
 import { HomePage } from '../../pages/HomePage'
 
 export function AuthenticatedRoutes() {
@@ -11,9 +11,9 @@ export function AuthenticatedRoutes() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
 
-                <Route path="/categories" element={<CategoryListPage />} />
-                <Route path="/categories/new" element={<CategoryFormPage />} />
-                <Route path="/categories/:id" element={<CategoryFormPage />} />
+                <Route path="/categories" element={<CategorySearchPage />} />
+                <Route path="/categories/new" element={<CategoryMaintenancePage />} />
+                <Route path="/categories/:id" element={<CategoryMaintenancePage />} />
 
                 <Route path="*" element={<HomePage />} />
             </Routes>

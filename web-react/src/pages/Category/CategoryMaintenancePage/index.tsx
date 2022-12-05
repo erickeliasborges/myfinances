@@ -1,21 +1,17 @@
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
-  Box,
-  Container,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
-  Text,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { ICategory } from "../../commons/interfaces";
-import { ButtonWithProgress } from "../../components/ButtonWithProgress";
-import CategoryService from "../../service/CategoryService";
+import { useNavigate, useParams } from "react-router-dom";
+import { ICategory } from "../../../commons/interfaces";
+import { CrudMaintenance } from "../../../components/Crud/CrudMaintenance";
+import CategoryService from "../../../service/CategoryService";
 
-export function CategoryFormPage() {
+export function CategoryMaintenancePage() {
   const [form, setForm] = useState({
     id: undefined,
     name: "",
@@ -38,7 +34,7 @@ export function CategoryFormPage() {
   useEffect(() => {
     setFocus("name");
     if (id) {
-      form.name
+      form.name;
       CategoryService.findById(parseInt(id))
         .then((response) => {
           if (response.data) {
@@ -72,7 +68,7 @@ export function CategoryFormPage() {
     setErrors((previousErrors: any) => {
       return {
         ...previousErrors,
-        [name]: '',
+        [name]: "",
       };
     });
   };
@@ -99,54 +95,32 @@ export function CategoryFormPage() {
   };
 
   return (
-    <Container position="absolute" height="90%" maxW="100%">
-      <Text className="text-center p-2" fontSize="30px">
-        Categoria / Manutenção
-      </Text>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl
-          variant="floating"
-          id="name"
-          isInvalid={errors.name && true}
-        >
-          <Input
-            placeholder=" "
-            type="text"
-            value={form.name}
-            {...register("name", {
-              required: "O campo nome é obrigatório",
-              onChange: onChange,      
-            })}
-          />
-          <FormLabel>Nome</FormLabel>
-          <FormErrorMessage>
-            {errors.name && errors.name.message}
-          </FormErrorMessage>
-        </FormControl>
+    <CrudMaintenance
+      title="Categoria"
+      onSubmitForm={handleSubmit(onSubmit)}
+      linkCancelMaintenance="/categories"
+    >
+      <FormControl variant="floating" id="name" isInvalid={errors.name && true}>
+        <Input
+          placeholder=" "
+          type="text"
+          value={form.name}
+          {...register("name", {
+            required: "O campo nome é obrigatório",
+            onChange: onChange,
+          })}
+        />
+        <FormLabel>Nome</FormLabel>
+        <FormErrorMessage>
+          {errors.name && errors.name.message}
+        </FormErrorMessage>
+      </FormControl>
 
-        {apiError && (
-          <div className="alert alert-danger">
-            Falha ao cadastrar a categoria.
-          </div>
-        )}
-
-        <Box display="flex" className="position-absolute bottom-0 end-0 m-3">
-          {/* Botão cancelar */}
-          <Link
-            className="btn btn-danger rounded-circle btn-lg me-1"
-            to="/categories"
-          >
-            <CloseIcon></CloseIcon>
-          </Link>
-          {/* Botão salvar */}
-          <button
-            className="btn btn-success rounded-circle btn-lg"
-            type="submit"
-          >
-            <CheckIcon></CheckIcon>
-          </button>
-        </Box>
-      </form>
-    </Container>
+      {apiError && (
+        <div className="alert alert-danger">
+          Falha ao cadastrar a categoria.
+        </div>
+      )}
+    </CrudMaintenance>
   );
 }
