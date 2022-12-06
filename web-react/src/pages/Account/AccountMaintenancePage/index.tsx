@@ -183,7 +183,7 @@ export function AccountMaintenancePage() {
           ))}
         </Select>
 
-        <FormLabel htmlFor="category">Banco</FormLabel>
+        <FormLabel>Banco</FormLabel>
         <FormErrorMessage>
           {errors.bank && errors.bank.message}
         </FormErrorMessage>
@@ -207,7 +207,7 @@ export function AccountMaintenancePage() {
           })}
         </Select>
 
-        <FormLabel htmlFor="typeAccount">Tipo</FormLabel>
+        <FormLabel>Tipo</FormLabel>
         <FormErrorMessage>
           {errors.typeAccount && errors.typeAccount.message}
         </FormErrorMessage>

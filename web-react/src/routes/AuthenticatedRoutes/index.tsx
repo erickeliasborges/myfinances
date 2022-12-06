@@ -7,6 +7,8 @@ import { BankSearchPage } from '../../pages/Bank/BankSearchPage'
 import { CategoryMaintenancePage } from '../../pages/Category/CategoryMaintenancePage'
 import { CategorySearchPage } from '../../pages/Category/CategorySearchPage'
 import { HomePage } from '../../pages/HomePage'
+import { MovementMaintenancePage } from '../../pages/Movement/MovementMaintenancePage'
+import { MovementSearchPage } from '../../pages/Movement/MovementSearchPage'
 
 export function AuthenticatedRoutes() {
     return (
@@ -29,6 +31,11 @@ export function AuthenticatedRoutes() {
                 <Route path="/accounts" element={<AccountSearchPage />} />
                 <Route path="/accounts/new" element={<AccountMaintenancePage />} />
                 <Route path="/accounts/:id" element={<AccountMaintenancePage />} />
+
+                {/* Movimentações */}
+                <Route path="/movements" element={<MovementSearchPage />} />
+                <Route path="/movements/new" element={<MovementMaintenancePage />} />
+                <Route path="/movements/:id" element={<MovementMaintenancePage />} />
 
                 <Route path="*" element={<HomePage />} />
             </Routes>

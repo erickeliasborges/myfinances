@@ -1,6 +1,7 @@
-import { TypeAccountEnum } from "./enums";
+import { TypeAccountEnum, TypeMovementEnum } from "./enums";
 
 export interface IUserSignUp {
+    id?: number,
     name: string;
     username: string;
     password: string;
@@ -29,4 +30,17 @@ export interface IAccount {
     number: number,
     bank: IBank,
     typeAccount: TypeAccountEnum,
+}
+
+export interface IMovement {
+    id?: number;
+    account: IAccount,
+    value: number,
+    dueDate: Date,
+    amountPaid: number,
+    typeAccount: TypeAccountEnum,
+    payDate: Date,
+    category: ICategory,
+    description: string,
+    typeMovement: TypeMovementEnum 
 }
