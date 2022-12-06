@@ -1,4 +1,4 @@
-import { IBank } from './../commons/interfaces';
+import { IBank } from '../commons/interfaces';
 import { api } from '../lib/axios'
 
 const save = (bank: IBank) => {

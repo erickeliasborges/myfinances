@@ -9,14 +9,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { ICategory } from "../../../commons/interfaces";
 import { CrudMaintenance } from "../../../components/Crud/CrudMaintenance";
-import CategoryService from "../../../service/CategoryService";
+import CategoryService from "../../../services/CategoryService";
 
 export function CategoryMaintenancePage() {
-  const [form, setForm] = useState({
-    id: undefined,
-    name: "",
-  });
-
   const {
     handleSubmit,
     register,
@@ -24,6 +19,7 @@ export function CategoryMaintenancePage() {
     setError,
     setFocus,
     reset,
+    setValue,
   } = useForm<ICategory>();
 
   const [pendingApiCall, setPendingApiCall] = useState(false);
@@ -34,14 +30,11 @@ export function CategoryMaintenancePage() {
   useEffect(() => {
     setFocus("name");
     if (id) {
-      form.name;
       CategoryService.findById(parseInt(id))
         .then((response) => {
           if (response.data) {
-            setForm({
-              id: response.data.id,
-              name: response.data.name,
-            });
+            setValue("id", response.data.id);
+            setValue("name", response.data.name);
           }
         })
         .catch((responseError) => {
@@ -52,18 +45,14 @@ export function CategoryMaintenancePage() {
 
   const setErrors = (errors: any) => {
     Object.keys(errors).forEach((value) => {
-      setError(value as "name", { message: errors[value] });
+      setError(value as any, { message: errors[value] });
     });
   };
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    setForm((previousForm) => {
-      return {
-        ...previousForm,
-        [name]: value,
-      };
-    });
+    
+    setValue(name as any, value);
 
     setErrors((previousErrors: any) => {
       return {
@@ -73,11 +62,7 @@ export function CategoryMaintenancePage() {
     });
   };
 
-  const onSubmit = () => {
-    const category: ICategory = {
-      id: parseInt(id!),
-      name: form.name,
-    };
+  const onSubmit = (category: ICategory) => {
     setPendingApiCall(true);
     CategoryService.save(category)
       .then((response) => {
@@ -104,7 +89,6 @@ export function CategoryMaintenancePage() {
         <Input
           placeholder=" "
           type="text"
-          value={form.name}
           {...register("name", {
             required: "O campo nome é obrigatório",
             onChange: onChange,

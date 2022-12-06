@@ -1,4 +1,4 @@
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, defineStyleConfig, extendTheme } from "@chakra-ui/react";
 import "./App.css";
 import { BaseRoutes } from "./routes/BaseRoutes";
 
@@ -17,7 +17,7 @@ export const theme = extendTheme({
     },
   },
   components: {
-    Form: {
+    Form: {      
       variants: {
         floating: {
           container: {

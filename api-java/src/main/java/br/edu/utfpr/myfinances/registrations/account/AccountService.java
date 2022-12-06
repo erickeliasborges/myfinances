@@ -12,11 +12,13 @@ import java.util.Optional;
 @Service
 public class AccountService extends GenericCrudService<Account, Long> {
 
+    private AccountRepository accountRepository;
     private MovementRepository movementRepository;
 
     @Autowired
     public AccountService(AccountRepository accountRepository, MovementRepository movementRepository) {
         super(accountRepository);
+        this.accountRepository = accountRepository;
         this.movementRepository = movementRepository;
     }
 
@@ -29,6 +31,14 @@ public class AccountService extends GenericCrudService<Account, Long> {
     @Override
     public String getMessageLinkedRegisterException() {
         return "Não é possível deletar pois a conta está em uso.";
+    }
+
+    public Optional<Account> findByAgencyAndNumberAndBank(Account account) {
+        return accountRepository.findByAgencyAndNumberAndBank(account.getAgency(), account.getNumber(), account.getBank());
+    }
+
+    public List<Account> findByUser_Id(Long id) {
+        return accountRepository.findByUser_Id(id).get();
     }
 
 }

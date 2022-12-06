@@ -21,7 +21,7 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 
-import AuthService from "../../service/AuthService";
+import AuthService from "../../services/AuthService";
 
 import * as Icon from 'react-bootstrap-icons';
 
@@ -268,7 +268,7 @@ const NAV_ITEMS: Array<NavItem> = [
     href: "/movements",
   },
   {
-    label: "Conta",
+    label: "Contas",
     href: "/accounts",
   },
   {

@@ -10,8 +10,8 @@ export function CrudBody({ title, children }: ICrudBody) {
     <Container position="absolute" height="90%" maxW="100%">
       <Text className="text-center p-2" fontSize="30px">
         {title}
-      </Text>
-      {children}
+      </Text>      
+      {children}      
     </Container>
   );
 }

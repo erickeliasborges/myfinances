@@ -9,14 +9,9 @@ import {
   import { useNavigate, useParams } from "react-router-dom";
   import { IBank } from "../../../commons/interfaces";
   import { CrudMaintenance } from "../../../components/Crud/CrudMaintenance";
-  import BankService from "../../../service/BankService";
+  import BankService from "../../../services/BankService";
   
-  export function BankMaintenancePage() {
-    const [form, setForm] = useState({
-      id: undefined,
-      name: "",
-    });
-  
+  export function BankMaintenancePage() {  
     const {
       handleSubmit,
       register,
@@ -24,6 +19,7 @@ import {
       setError,
       setFocus,
       reset,
+      setValue,
     } = useForm<IBank>();
   
     const [pendingApiCall, setPendingApiCall] = useState(false);
@@ -34,14 +30,11 @@ import {
     useEffect(() => {
       setFocus("name");
       if (id) {
-        form.name;
         BankService.findById(parseInt(id))
           .then((response) => {
             if (response.data) {
-              setForm({
-                id: response.data.id,
-                name: response.data.name,
-              });
+              setValue("id", response.data.id);
+              setValue("name", response.data.name);
             }
           })
           .catch((responseError) => {
@@ -52,18 +45,14 @@ import {
   
     const setErrors = (errors: any) => {
       Object.keys(errors).forEach((value) => {
-        setError(value as "name", { message: errors[value] });
+        setError(value as any, { message: errors[value] });
       });
     };
   
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
       const { value, name } = event.target;
-      setForm((previousForm) => {
-        return {
-          ...previousForm,
-          [name]: value,
-        };
-      });
+
+      setValue(name as any, value);
   
       setErrors((previousErrors: any) => {
         return {
@@ -73,13 +62,9 @@ import {
       });
     };
   
-    const onSubmit = () => {
-      const category: IBank = {
-        id: parseInt(id!),
-        name: form.name,
-      };
+    const onSubmit = (bank: IBank) => {
       setPendingApiCall(true);
-      BankService.save(category)
+      BankService.save(bank)
         .then((response) => {
           setPendingApiCall(false);
           navigate("/banks");
@@ -104,7 +89,6 @@ import {
           <Input
             placeholder=" "
             type="text"
-            value={form.name}
             {...register("name", {
               required: "O campo nome é obrigatório",
               onChange: onChange,

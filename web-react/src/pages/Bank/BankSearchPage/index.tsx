@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { ICategory } from "../../../commons/interfaces";
-import BankService from "../../../service/BankService";
-import { IDataTableBody, CrudSearch } from "../../../components/Crud/CrudSearch";
+import BankService from "../../../services/BankService";
+import {
+  IDataTableBody,
+  CrudSearch,
+} from "../../../components/Crud/CrudSearch";
 
 export function BankSearchPage() {
   const [data, setData] = useState([]);

@@ -1,6 +1,6 @@
 import { Container, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import AuthService from "../../service/AuthService";
+import AuthService from "../../services/AuthService";
 
 export function HomePage() {
     const [userName, setUserName] = useState("");

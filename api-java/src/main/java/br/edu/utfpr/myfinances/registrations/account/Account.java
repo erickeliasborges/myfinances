@@ -1,6 +1,7 @@
 package br.edu.utfpr.myfinances.registrations.account;
 
 import br.edu.utfpr.myfinances.registrations.account.enums.TypeAccountEnum;
+import br.edu.utfpr.myfinances.registrations.account.validations.AccountUniqueConstraint;
 import br.edu.utfpr.myfinances.registrations.bank.Bank;
 import br.edu.utfpr.myfinances.registrations.user.User;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @Setter
 @Entity(name = "account")
 @Table(uniqueConstraints = { @UniqueConstraint(name = "unique_account", columnNames = {"agency", "number", "bank_id"}) })
+@AccountUniqueConstraint
 public class Account implements Serializable {
 
     @Id

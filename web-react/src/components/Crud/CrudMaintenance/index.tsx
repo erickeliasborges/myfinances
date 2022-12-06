@@ -1,5 +1,5 @@
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { Box } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { CrudBody } from "../CrudBody";
 
@@ -19,7 +19,7 @@ export function CrudMaintenance({
   return (
     <CrudBody title={`${title} / Manutenção`}>
       <form onSubmit={onSubmitForm}>
-        {children}
+        <Stack spacing={4}>{children}</Stack>
 
         <Box display="flex" className="position-absolute bottom-0 end-0 m-3">
           {/* Botão cancelar */}

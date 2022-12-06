@@ -10,10 +10,10 @@ import {
   Link,
   Stack,
 } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IUserLogin } from "../../commons/interfaces";
-import AuthService from "../../service/AuthService";
+import AuthService from "../../services/AuthService";
 
 export function LoginPage() {
   const {
@@ -39,7 +39,7 @@ export function LoginPage() {
         [name]: value,
       };
     });
-  };
+  };  
 
   const onSubmit = () => {
     setPendingApiCall(true);
@@ -49,7 +49,7 @@ export function LoginPage() {
     };
     AuthService.login(userLogin)
       .then((response) => {
-        localStorage.setItem("token", JSON.stringify(response.data.token));
+        localStorage.setItem("token", JSON.stringify(response.data.token));        
         setPendingApiCall(false);
         window.location.reload();
         console.log(response);

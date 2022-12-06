@@ -1,3 +1,4 @@
+import { TypeAccountEnum } from "./enums";
 
 export interface IUserSignUp {
     name: string;
@@ -19,4 +20,13 @@ export interface ICategory {
 export interface IBank {
     id?: number;
     name: string;
+}
+
+export interface IAccount {
+    id?: number;
+    user: IUserSignUp,
+    agency: string,
+    number: number,
+    bank: IBank,
+    typeAccount: TypeAccountEnum,
 }

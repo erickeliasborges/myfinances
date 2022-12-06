@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { IUserSignUp } from "../../commons/interfaces";
-import AuthService from "../../service/AuthService";
+import AuthService from "../../services/AuthService";
 import { ButtonWithProgress } from "../../components/ButtonWithProgress";
 import { useNavigate } from "react-router-dom";
 import {

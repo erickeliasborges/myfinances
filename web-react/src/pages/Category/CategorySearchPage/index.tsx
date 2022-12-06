@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ICategory } from "../../../commons/interfaces";
-import CategoryService from "../../../service/CategoryService";
+import CategoryService from "../../../services/CategoryService";
 import { IDataTableBody, CrudSearch } from "../../../components/Crud/CrudSearch";
 
 export function CategorySearchPage() {

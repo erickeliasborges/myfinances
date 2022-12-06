@@ -3,6 +3,7 @@ package br.edu.utfpr.myfinances.generic.crud;
 import br.edu.utfpr.myfinances.apierror.exception.DataNotFoundException;
 import br.edu.utfpr.myfinances.apierror.exception.LinkedRegisterException;
 import br.edu.utfpr.myfinances.generic.response.GenericResponse;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,9 +11,15 @@ import java.util.Optional;
 public abstract class GenericCrudService<T, ID> {
 
     private final GenericCrudRepository<T, ID> genericCrudRepository;
+    private String defaultOrderBy = "id";
 
     public GenericCrudService(GenericCrudRepository<T, ID> genericCrudRepository) {
         this.genericCrudRepository = genericCrudRepository;
+    }
+
+    public GenericCrudService(GenericCrudRepository<T, ID> genericCrudRepository, String defaultOrderBy) {
+        this.genericCrudRepository = genericCrudRepository;
+        this.defaultOrderBy = defaultOrderBy;
     }
 
     public T update(T requestBody) throws Exception {
@@ -43,7 +50,7 @@ public abstract class GenericCrudService<T, ID> {
     }
 
     public List<T> getAll() {
-        return genericCrudRepository.findAll();
+        return genericCrudRepository.findAll(Sort.by(Sort.Direction.ASC, defaultOrderBy));
     }
 
     public T getById(ID id) {
