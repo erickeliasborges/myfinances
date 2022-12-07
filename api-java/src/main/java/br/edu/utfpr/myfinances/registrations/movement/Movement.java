@@ -34,6 +34,10 @@ public class Movement implements Serializable {
     @NotNull
     private Account account;
 
+    @ManyToOne
+    @JoinColumn(name = "destination_account_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_destination_account"))
+    private Account destinationAccount;
+
     @Column
     @NotNull
     @DecimalMin(message = "O valor deve ser maior que zero.", value = "0.1")
@@ -41,13 +45,6 @@ public class Movement implements Serializable {
 
     @Column(name = "due_date", columnDefinition = "timestamp")
     private LocalDateTime dueDate;
-
-    @Column(name = "amount_paid")
-    @DecimalMin(message = "O valor pago deve ser maior que zero.", value = "0.1")
-    private BigDecimal amountPaid;
-
-    @Column(name = "pay_date", columnDefinition = "timestamp")
-    private LocalDateTime payDate;
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_category"))

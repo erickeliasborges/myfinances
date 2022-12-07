@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
-import { ICategory, IMovement } from "../../../commons/interfaces";
+import { IMovement } from "../../../commons/interfaces";
 import MovementService from "../../../services/MovementService";
-import { IDataTableBody, CrudSearch } from "../../../components/Crud/CrudSearch";
+import {
+  IDataTableBody,
+  CrudSearch,
+} from "../../../components/Crud/CrudSearch";
+import {
+  getEnumByKey,
+  TypeMovementEnum,
+} from "../../../commons/enums";
+import { formatDatePtBr, formatMoneyPtBr } from "../../../utils/FormatUtils";
 
 export function MovementSearchPage() {
   const [data, setData] = useState([]);
@@ -40,8 +48,17 @@ export function MovementSearchPage() {
     data.forEach((movement: IMovement) => {
       let columns: string[] = [];
       let id: string = movement.id!.toString();
-      columns.push(id);
-      columns.push(`${movement.account.agency} - ${movement.account.number} - ${movement.account.bank.name}`);
+      columns.push(movement.description); // Descrição
+      columns.push(getEnumByKey(TypeMovementEnum, movement.typeMovement)); // Tipo      
+      columns.push(formatMoneyPtBr(movement.value)!); // Valor
+      columns.push(formatDatePtBr(movement.dueDate)!); // Data de vencimento
+      columns.push(
+        `${movement.account.agency} - ${movement.account.number} - ${movement.account.bank.name}`
+      ); // Conta
+      columns.push( movement.destinationAccount ? 
+        `${movement.destinationAccount.agency} - ${movement.destinationAccount.number} - ${movement.destinationAccount.bank.name}` : ""
+      ); // Conta
+      columns.push(movement.category.name); // Categoria
       values.push({
         id: id,
         linkEditRegister: `/movements/${id}`,
@@ -56,7 +73,15 @@ export function MovementSearchPage() {
     <CrudSearch
       title="Movimentações"
       apiError={apiError}
-      columsTableHead={["Id", "Conta"]}
+      columsTableHead={[
+        "Descrição",
+        "Tipo",        
+        "Valor",
+        "Data de vencimento",
+        "Conta",
+        "Conta destino",
+        "Categoria",
+      ]}
       dataTableBody={getColumnsWithDataTableBody()}
       linkNewRegister="/movements/new"
     ></CrudSearch>

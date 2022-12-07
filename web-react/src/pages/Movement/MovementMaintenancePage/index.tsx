@@ -6,11 +6,17 @@ import {
   InputGroup,
   InputLeftElement,
   Select,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { TypeAccountEnum, TypeMovementEnum } from "../../../commons/enums";
+import {
+  getEnumByKey,
+  getEnumByValue,
+  TypeAccountEnum,
+  TypeMovementEnum,
+} from "../../../commons/enums";
 import { IMovement, IAccount, ICategory } from "../../../commons/interfaces";
 import { CrudMaintenance } from "../../../components/Crud/CrudMaintenance";
 import MovementService from "../../../services/MovementService";
@@ -28,6 +34,7 @@ export function MovementMaintenancePage() {
     reset,
     setValue,
     getValues,
+    clearErrors
   } = useForm<IMovement>();
 
   const [pendingApiCall, setPendingApiCall] = useState(false);
@@ -36,9 +43,19 @@ export function MovementMaintenancePage() {
   const { id } = useParams();
   const [accounts, setAccounts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [destinationAccountVisible, setDestinationAccountVisible] =
+    useState(false);
+
+  const setCurrentDate = () => {
+    // let date = new Date();
+    // // Achar uma forma melhor de setar a data atual
+    // setValue("dueDate", new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON().substring(0, 19) as unknown as Date)
+  }
 
   useEffect(() => {
     setFocus("description");
+
+    setCurrentDate();
 
     AuthService.loggedUser()
       .then((user: any) => {
@@ -58,12 +75,15 @@ export function MovementMaintenancePage() {
                         setValue("id", response.data.id);
                         setValue("description", response.data.description);
                         setValue("account", response.data.account);
+                        setValue(
+                          "destinationAccount",
+                          response.data.destinationAccount
+                        );
                         setValue("value", response.data.value);
                         setValue("dueDate", response.data.dueDate);
-                        setValue("amountPaid", response.data.amountPaid);
-                        setValue("payDate", response.data.payDate);
                         setValue("category", response.data.category);
                         setValue("typeMovement", response.data.typeMovement);
+                        configFields();
                       }
                     })
                     .catch((responseError) => {
@@ -85,6 +105,13 @@ export function MovementMaintenancePage() {
       });
   }, []);
 
+  const configFields = () => {
+    setDestinationAccountVisible(
+      getValues("typeMovement") ==
+        getEnumByValue(TypeMovementEnum, TypeMovementEnum.TRANSFERENCIA_CONTAS)
+    );
+  };
+
   const setErrors = (errors: any) => {
     Object.keys(errors).forEach((value) => {
       setError(value as any, { message: errors[value] });
@@ -104,9 +131,22 @@ export function MovementMaintenancePage() {
     });
   };
 
+  const validAccountTransfer = () => {
+    if (getValues("account.id") == getValues("destinationAccount.id")) {
+      setError("destinationAccount", {
+        message: "A conta destino deve ser diferente da conta de origem",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const onSubmit = (movement: IMovement) => {
+    if (!validAccountTransfer()) return;
+
     setApiError("");
-    setPendingApiCall(true);
+    setPendingApiCall(true);    
 
     MovementService.save(movement)
       .then((response) => {
@@ -149,6 +189,72 @@ export function MovementMaintenancePage() {
         </FormErrorMessage>
       </FormControl>
 
+      <FormControl isInvalid={errors.typeMovement && true} variant="floating">
+        <Select
+          id="typeMovement"
+          {...register("typeMovement", {
+            required: "O campo tipo é obrigatório",
+            onChange(event) {
+              onChange(event);
+              configFields();
+            },
+            disabled: id != null,
+          })}
+          size="sm"
+        >
+          {Object.keys(TypeMovementEnum).map((value) => {
+            return (
+              <option key={value} value={value}>
+                {getEnumByKey(TypeMovementEnum, value)}
+              </option>
+            );
+          })}
+        </Select>
+
+        <FormLabel>Tipo</FormLabel>
+        <FormErrorMessage>
+          {errors.typeMovement && errors.typeMovement.message}
+        </FormErrorMessage>
+      </FormControl>
+
+      <SimpleGrid columns={2} spacing={2}>
+        <FormControl
+          variant="floating"
+          id="value"
+          isInvalid={errors.value && true}
+        >
+          <Input
+            placeholder=" "
+            type="number"
+            {...register("value", {
+              required: "O campo valor é obrigatório",
+              onChange: onChange,
+            })}
+          />
+          <FormLabel>Valor</FormLabel>
+          <FormErrorMessage>
+            {errors.value && errors.value.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl
+          variant="floating"
+          id="dueDate"
+          isInvalid={errors.dueDate && true}
+        >
+          <Input
+            placeholder=" "
+            type="datetime-local"
+            {...register("dueDate", {
+              onChange: onChange,
+            })}
+          />
+          <FormLabel>Data de vencimento</FormLabel>
+          <FormErrorMessage>
+            {errors.dueDate && errors.dueDate.message}
+          </FormErrorMessage>
+        </FormControl>
+      </SimpleGrid>
+
       <FormControl isInvalid={errors.account && true} variant="floating">
         <Select
           {...register("account.id", {
@@ -170,6 +276,35 @@ export function MovementMaintenancePage() {
         </FormErrorMessage>
       </FormControl>
 
+      {destinationAccountVisible && (
+        <FormControl
+          isInvalid={errors.destinationAccount && true}
+          variant="floating"
+        >
+          <Select
+            {...register("destinationAccount.id", {
+              onChange(event) {
+                clearErrors("destinationAccount");
+                onChange(event);                   
+              },
+              required: "O campo conta destino é obrigatório",
+            })}
+            size="sm"
+          >
+            {accounts.map((account: IAccount) => (
+              <option key={account.id} value={account.id}>
+                {account.agency} - {account.number} - {account.bank.name}
+              </option>
+            ))}
+          </Select>
+
+          <FormLabel>Conta destino</FormLabel>
+          <FormErrorMessage>
+            {errors.destinationAccount && errors.destinationAccount!.message}
+          </FormErrorMessage>
+        </FormControl>
+      )}
+
       <FormControl isInvalid={errors.category && true} variant="floating">
         <Select
           {...register("category.id", {
@@ -188,103 +323,6 @@ export function MovementMaintenancePage() {
         <FormLabel>Categoria</FormLabel>
         <FormErrorMessage>
           {errors.category && errors.category.message}
-        </FormErrorMessage>
-      </FormControl>
-
-      <FormControl
-        variant="floating"
-        id="value"
-        isInvalid={errors.value && true}
-      >
-        <Input
-          placeholder=" "
-          type="number"
-          {...register("value", {
-            required: "O campo valor é obrigatório",
-            onChange: onChange,
-          })}
-        />
-        <FormLabel>Valor</FormLabel>
-        <FormErrorMessage>
-          {errors.value && errors.value.message}
-        </FormErrorMessage>
-      </FormControl>
-
-      <FormControl
-        variant="floating"
-        id="amountPaid"
-        isInvalid={errors.amountPaid && true}
-      >
-        <Input
-          placeholder=" "
-          type="number"
-          {...register("amountPaid", {
-            onChange: onChange,
-          })}
-        />
-        <FormLabel>Valor pago</FormLabel>
-        <FormErrorMessage>
-          {errors.amountPaid && errors.amountPaid.message}
-        </FormErrorMessage>
-      </FormControl>
-
-      <FormControl
-        variant="floating"
-        id="dueDate"
-        isInvalid={errors.dueDate && true}
-      >
-        <Input
-          placeholder=" "
-          type="datetime-local"
-          {...register("dueDate", {
-            onChange: onChange,
-          })}
-        />
-        <FormLabel>Data de vencimento</FormLabel>
-        <FormErrorMessage>
-          {errors.dueDate && errors.dueDate.message}
-        </FormErrorMessage>
-      </FormControl>
-
-      <FormControl
-        variant="floating"
-        id="payDate"
-        isInvalid={errors.payDate && true}
-      >
-        <Input
-          placeholder=" "
-          type="datetime-local"
-          {...register("payDate", {
-            onChange: onChange,
-          })}
-        />
-        <FormLabel>Data de pagamento</FormLabel>
-        <FormErrorMessage>
-          {errors.payDate && errors.payDate.message}
-        </FormErrorMessage>
-      </FormControl>
-
-      <FormControl isInvalid={errors.typeMovement && true} variant="floating">
-        <Select
-          id="typeMovement"
-          {...register("typeMovement", {
-            required: "O campo tipo é obrigatório",
-            onChange: onChange,
-          })}
-          size="sm"
-        >
-          {Object.keys(TypeMovementEnum).map((value) => {
-            return (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            );
-          })}
-        </Select>
-
-        <FormLabel>Tipo</FormLabel>
-        <FormErrorMessage>
-          {errors.typeMovement && errors.typeMovement.message}
         </FormErrorMessage>
       </FormControl>
 

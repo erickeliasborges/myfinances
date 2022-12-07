@@ -35,11 +35,10 @@ export interface IAccount {
 export interface IMovement {
     id?: number;
     account: IAccount,
+    destinationAccount: IAccount,
     value: number,
-    dueDate: Date,
-    amountPaid: number,
+    dueDate: Date,    
     typeAccount: TypeAccountEnum,
-    payDate: Date,
     category: ICategory,
     description: string,
     typeMovement: TypeMovementEnum 
