@@ -3,8 +3,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  InputGroup,
-  InputLeftElement,
   Select,
   SimpleGrid,
 } from "@chakra-ui/react";
@@ -14,7 +12,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   getEnumByKey,
   getEnumByValue,
-  TypeAccountEnum,
   TypeMovementEnum,
 } from "../../../commons/enums";
 import { IMovement, IAccount, ICategory } from "../../../commons/interfaces";
@@ -190,7 +187,7 @@ export function MovementMaintenancePage() {
       </FormControl>
 
       <FormControl isInvalid={errors.typeMovement && true} variant="floating">
-        <Select
+        <Select disabled={id != null}
           id="typeMovement"
           {...register("typeMovement", {
             required: "O campo tipo é obrigatório",
@@ -198,7 +195,6 @@ export function MovementMaintenancePage() {
               onChange(event);
               configFields();
             },
-            disabled: id != null,
           })}
           size="sm"
         >

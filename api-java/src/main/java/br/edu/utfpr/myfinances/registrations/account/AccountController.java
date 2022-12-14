@@ -1,6 +1,7 @@
 package br.edu.utfpr.myfinances.registrations.account;
 
 import br.edu.utfpr.myfinances.generic.crud.GenericCrudController;
+import br.edu.utfpr.myfinances.registrations.account.dtos.AccountOverviewDTO;
 import br.edu.utfpr.myfinances.registrations.account.responses.DuplicatedAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,6 @@ public class AccountController extends GenericCrudController<Account, Account, L
         this.accountService = accountService;
     }
 
-    //TODO: criar endpoint para mostrar saldo da conta, com base nas movimentacoes de receita(ganhos) e despesas
-
     @PostMapping("duplicated")
     public ResponseEntity<DuplicatedAccount> duplicatedAccount(@RequestBody Account account) {
         Optional<Account> optionalAccount = accountService.findByAgencyAndNumberAndBank(account);
@@ -33,6 +32,11 @@ public class AccountController extends GenericCrudController<Account, Account, L
     @GetMapping("user/{id}")
     public ResponseEntity<List<Account>> findByUser(@PathVariable("id") Long id) {
         return ResponseEntity.ok(accountService.findByUser_Id(id));
+    }
+
+    @GetMapping("overview")
+    public ResponseEntity<List<AccountOverviewDTO>> findOverview() {
+        return ResponseEntity.ok(accountService.findOverview());
     }
 
 }

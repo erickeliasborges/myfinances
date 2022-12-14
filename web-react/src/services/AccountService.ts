@@ -25,6 +25,10 @@ const duplicatedAccount = (account: IAccount) => {
     return api.post(`/account/duplicated`, account);
 }
 
+const getOverview = () => {
+    return api.get(`/account/overview`);
+}
+
 const AccountService = {
     save,
     findAll,
@@ -32,6 +36,7 @@ const AccountService = {
     findById,
     duplicatedAccount,
     findByUserId,
+    getOverview,
 }
 
 export default AccountService;

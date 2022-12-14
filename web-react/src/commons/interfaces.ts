@@ -25,6 +25,7 @@ export interface IBank {
 
 export interface IAccount {
     id?: number;
+    description: string,
     user: IUserSignUp,
     agency: string,
     number: number,
@@ -42,4 +43,18 @@ export interface IMovement {
     category: ICategory,
     description: string,
     typeMovement: TypeMovementEnum 
+}
+
+export interface IOverview {
+    account: IAccount,
+    saldo: number,
+    saldoPrevisto: number,
+    receitas: number,
+    receitasPrevistas: number,
+    despesas: number,
+    despesasPrevistas: number,
+    transferenciasRecebidas: number,
+    transferenciasRecebidasPrevistas: number,
+    transferenciasEnviadas: number,
+    transferenciasEnviadasPrevistas: number,
 }

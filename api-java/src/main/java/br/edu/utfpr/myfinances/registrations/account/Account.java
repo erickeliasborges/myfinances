@@ -24,6 +24,9 @@ public class Account implements Serializable {
     @SequenceGenerator(name = "account_seq", sequenceName = "account_seq")
     private Long id;
 
+    @NotNull
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_user"))
     @NotNull

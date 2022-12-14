@@ -33,7 +33,7 @@ export function AccountMaintenancePage() {
   const [banks, setBanks] = useState([]);
 
   useEffect(() => {
-    setFocus("agency");
+    setFocus("description");
 
     setLoggedUser();
 
@@ -46,9 +46,10 @@ export function AccountMaintenancePage() {
               if (response.data) {
                 setValue("id", response.data.id);
                 setValue("user", response.data.user);
+                setValue("description", response.data.description);
                 setValue("agency", response.data.agency);
                 setValue("number", response.data.number);
-                setValue("bank", response.data.bank);
+                setValue("bank", response.data.bank);                
                 setValue("typeAccount", response.data.typeAccount);
               }
             })
@@ -129,6 +130,25 @@ export function AccountMaintenancePage() {
       onSubmitForm={handleSubmit(onSubmit)}
       linkCancelMaintenance="/accounts"
     >
+      <FormControl
+        variant="floating"
+        id="description"
+        isInvalid={errors.description && true}
+      >
+        <Input
+          placeholder=" "
+          type="text"
+          {...register("description", {
+            required: "O campo descrição é obrigatório",
+            onChange: onChange,
+          })}
+        />
+        <FormLabel>Descrição</FormLabel>
+        <FormErrorMessage>
+          {errors.description && errors.description.message}
+        </FormErrorMessage>
+      </FormControl>
+
       <FormControl
         variant="floating"
         id="agency"

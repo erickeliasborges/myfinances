@@ -264,6 +264,10 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
+    label: "Overview",
+    href: "/",
+  },
+  {
     label: "Movimentações",
     href: "/movements",
   },
